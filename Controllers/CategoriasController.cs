@@ -14,11 +14,20 @@ namespace ManejoPresupuesto.Controllers {
         }
 
         /* Vista para el listado de Categorias */
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index(PaginacionModel paginacion) {
             var usuarioID = usuarioRepository.ObtenerUsuarioID();
-            var categorias = await categoriasRepository.ObtenerCategorias(usuarioID);
+            var categorias = await categoriasRepository.ObtenerCategorias(usuarioID, paginacion);
+            var totalCategorias = await categoriasRepository.ContarCategorias(usuarioID);
 
-            return View(categorias);   
+            var respuestaVM = new PaginacionRespuesta<CategoriaModel> {
+                Elementos = categorias,
+                Pagina = paginacion.Pagina,
+                RegistrosPorPagina = paginacion.RegistrosPorPagina,
+                CantidadTotalRegistros = totalCategorias,
+                BaseURL = "/Categorias"
+            };
+
+            return View(respuestaVM);   
         }
 
         /* Vista para crear categoria */

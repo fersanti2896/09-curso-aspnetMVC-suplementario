@@ -11,11 +11,23 @@ namespace ManejoPresupuesto.Services {
         }
 
         /* Obtiene el listado de categorias */
-        public async Task<IEnumerable<CategoriaModel>> ObtenerCategorias(int usuarioID) {
+        public async Task<IEnumerable<CategoriaModel>> ObtenerCategorias(int usuarioID, PaginacionModel paginacion) {
             using var connection = new SqlConnection(connectionString);
 
-            return await connection.QueryAsync<CategoriaModel>(@"SELECT * FROM Categorias
-                                                                 WHERE UsuarioID = @UsuarioID", new { usuarioID });
+            return await connection.QueryAsync<CategoriaModel>(@$"SELECT * FROM Categorias
+                                                                 WHERE UsuarioID = @UsuarioID
+                                                                 ORDER BY Nombre
+                                                                 OFFSET {paginacion.RegistrosASaltar} ROWS FETCH NEXT {paginacion.RegistrosPorPagina}
+                                                                 ROWS ONLY",
+                                                                 new { usuarioID });
+        }
+
+        /* Cuenta las categorías de un usuario */
+        public async Task<int> ContarCategorias(int usuarioID) {
+            using var connection = new SqlConnection(connectionString);
+
+            return await connection.ExecuteScalarAsync<int>(@"SELECT COUNT(*) FROM Categorias
+                                                              WHERE UsuarioId = @UsuarioID", new { usuarioID });
         }
 
         /* Crea una categoria */

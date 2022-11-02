@@ -2,7 +2,7 @@
     public class PaginacionModel {
         public int Pagina { get; set; } = 1;
 
-        public int DatosPaginas = 10;
+        public int DatosPaginas = 5;
 
         private readonly int cantidadMaxDatosPagina = 50;
 

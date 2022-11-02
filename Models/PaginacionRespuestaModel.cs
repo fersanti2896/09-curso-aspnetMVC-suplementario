@@ -1,7 +1,7 @@
 ﻿namespace ManejoPresupuesto.Models {
     public class PaginacionRespuestaModel {
         public int Pagina { get; set; } = 1;
-        public int RegistrosPorPagina { get; set; } = 10;
+        public int RegistrosPorPagina { get; set; } = 5;
         public int CantidadTotalRegistros { get; set; }
         public int CantidadTotalPaginas => (int)Math.Ceiling((double)CantidadTotalRegistros / RegistrosPorPagina);
         public string BaseURL { get; set; }

@@ -10,9 +10,21 @@
 <hr />
 <h5>La categoría nos permite inidicar en qué gastamos nuestro dinero, 
     también de dónde provienen nuestros ingresos.
-</h5><br />
+</h5>
 
-<h6>Cantidad de Registros: @Model.CantidadTotalRegistros | Cantidad de Páginas: @Model.CantidadTotalPaginas</h6>
+<div class="row">
+    <label>Cantidad de Registros a mostrar:</label>
+    <div class="mb-3 col-auto">
+        <select asp-for="@Model.RegistrosPorPagina" 
+                id="cantidadRegistrosPorPagina" 
+                class="form-select">
+            <option>2</option>
+            <option>3</option>
+            <option>5</option>
+            <option>10</option>
+        </select>
+    </div>
+</div>
 
 <table class="table table-hover">
     <thead>
@@ -43,3 +55,12 @@
 </table>
 
 <partial name="_Paginacion" />
+
+@section Scripts{
+    <script>
+        $("#cantidadRegistrosPorPagina").change(function () {
+            const registrosPagina = $(this).val();
+            location.href = `/Categorias/?pagina=1&RegistrosPorPagina=${ registrosPagina }`;
+        });
+    </script>
+}

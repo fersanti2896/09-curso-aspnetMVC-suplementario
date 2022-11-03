@@ -24,7 +24,7 @@ namespace ManejoPresupuesto.Controllers {
                 Pagina = paginacion.Pagina,
                 RegistrosPorPagina = paginacion.RegistrosPorPagina,
                 CantidadTotalRegistros = totalCategorias,
-                BaseURL = "/Categorias"
+                BaseURL = Url.Action()
             };
 
             return View(respuestaVM);   

@@ -47,8 +47,13 @@ namespace ManejoPresupuesto.Controllers {
 
         private async Task<IEnumerable<SelectListItem>> ListadoCategoriasByTipoOperacion(int usuarioID, TipoOperacionModel tipoOperacion) { 
             var categorias = await categoriasRepository.ObtenerCategoriasByTipoOperacion(usuarioID, tipoOperacion);
+            var result = categorias.Select(x => new SelectListItem(x.Nombre, x.Id.ToString()))
+                                   .ToList();
 
-            return categorias.Select(x => new SelectListItem(x.Nombre, x.Id.ToString()));
+            var opcDefecto = new SelectListItem("-- Selecciona una Categoría --", "0", true);
+            result.Insert(0, opcDefecto);
+
+            return result;
         }
 
         /* Obtiene las categorias en base al tipo de operacion */

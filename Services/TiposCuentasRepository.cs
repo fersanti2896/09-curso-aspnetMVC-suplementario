@@ -23,12 +23,12 @@ namespace ManejoPresupuesto.Services {
         }
 
         /* Verifica si existe una cuenta en la BD */
-        public async Task<bool> ExisteTipoCuenta(string nombre, int usuarioID) {
+        public async Task<bool> ExisteTipoCuenta(string nombre, int usuarioID, int Id = 0) {
             using var connection = new SqlConnection(conecctionString);
             var existe = await connection.QueryFirstOrDefaultAsync<int>($@"SELECT 1
                                                                            FROM TiposCuentas
-                                                                           WHERE Nombre = @Nombre AND UsuarioID = @UsuarioID;", 
-                                                                        new { nombre, usuarioID });
+                                                                           WHERE Nombre = @Nombre AND UsuarioID = @UsuarioID AND Id <> @Id;", 
+                                                                        new { nombre, usuarioID, Id });
 
             return existe == 1;
         }

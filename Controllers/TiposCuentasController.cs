@@ -43,9 +43,9 @@ namespace ManejoPresupuesto.Controllers {
 
         /* Verifica la existencia de un tipo de cuenta desde JS */
         [HttpGet]
-        public async Task<IActionResult> VerificaExistenciaTipoCuenta(string nombre) {
+        public async Task<IActionResult> VerificaExistenciaTipoCuenta(string nombre, int Id) {
             var usuarioID = usuarioRepository.ObtenerUsuarioID();
-            var existeTipoCuenta = await tiposCuentasRepository.ExisteTipoCuenta(nombre, usuarioID);
+            var existeTipoCuenta = await tiposCuentasRepository.ExisteTipoCuenta(nombre, usuarioID, Id);
 
             if (existeTipoCuenta) {
                 return Json($"¡El nombre { nombre } ya existe!");
